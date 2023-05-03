@@ -8,6 +8,7 @@ import {
   UseGuards,
   UseFilters,
   Headers,
+  Patch,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ProductsService } from '../products/products.service';
@@ -18,11 +19,9 @@ import { BidEndDatePassedException } from '../exceptions/BidEndDatePassedExcepti
 import { BidEndDatePassedExceptionFilter } from '../exceptions/BidEndDatePassedExceptionFilter';
 import { ProductHasBuyerException } from '../exceptions/ProductHasBuyerException';
 import { ProductHasBuyerExceptionFilter } from '../exceptions/ProductHasBuyerExceptionFilter';
-import { UpdateBidDto } from '../bids/dto/update-bid.dto';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-import { User } from '../users/schema/user.schema';
 import { Product } from '../products/schema/product.schema';
-import { Bid } from 'src/bids/schema/bid.schema';
+import { Bid } from '../bids/schema/bid.schema';
+import { UpdateProductDto } from '../products/dto/update-product.dto';
 
 @Controller('seller')
 export class SellerController {
@@ -36,11 +35,12 @@ export class SellerController {
   @Post()
   async createProduct(
     @Body() createProductDto: CreateProductDto,
-  ): Promise<User> {
+  ): Promise<Product> {
     const product = await this.productsService.create(createProductDto);
     const user = await this.usersService.findOne(createProductDto.sellerId);
     user.products.push(product.productId);
-    return await this.usersService.update(createProductDto.sellerId, user);
+    await this.usersService.update(createProductDto.sellerId, user);
+    return product;
   }
 
   // @UseGuards(AuthGuard('jwt'))
@@ -72,6 +72,13 @@ export class SellerController {
     });
 
     return productBiddersDetailList;
+  }
+
+  @Patch()
+  async updateProduct(
+    @Body() updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    return this.productsService.update(updateProductDto);
   }
 
   @Delete(':id')

@@ -63,7 +63,7 @@ export class BuyerController {
       bid = await this.bidsService.create(createBidDto).then((res) => {
         product.bids.push(res.bidId);
         createBidDto.bidder.badeProducts.push(res.productId);
-        this.productsService.update(createBidDto.productId, product);
+        this.productsService.update(product);
         this.usersService.update(createBidDto.bidder.userId, {
           badeProducts: createBidDto.bidder.badeProducts,
         });

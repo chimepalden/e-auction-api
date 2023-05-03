@@ -88,20 +88,15 @@ describe('ProductsController', () => {
 
       beforeEach(async () => {
         updateProduct = {
+          productId: productStub().productId,
           category: 'Painting',
           startingPrice: 2000,
         };
-        product = await productController.update(
-          productStub().productId,
-          updateProduct,
-        );
+        product = await productController.update(updateProduct);
       });
 
       test('then it should call product Service', () => {
-        expect(productService.update).toBeCalledWith(
-          productStub().productId,
-          updateProduct,
-        );
+        expect(productService.update).toBeCalledWith(updateProduct);
       });
 
       test('then it should return the product', () => {

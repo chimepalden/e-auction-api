@@ -88,10 +88,7 @@ describe('BuyerController', () => {
       test('then, it should call productsService to update products bid list', () => {
         updateProductDto = productStub();
         updateProductDto.bids.push(bid.bidId);
-        expect(productsService.update).toBeCalledWith(
-          bid.productId,
-          updateProductDto,
-        );
+        expect(productsService.update).toBeCalledWith(updateProductDto);
       });
 
       test('then, it should call usersService to update users bade list', () => {

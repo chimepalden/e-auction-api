@@ -85,17 +85,15 @@ describe('ProductsService', () => {
 
       beforeEach(async () => {
         updateProduct = {
+          productId: productStub().productId,
           startingPrice: 3300,
         };
-        product = await productsService.update(
-          productStub().productId,
-          updateProduct,
-        );
+        product = await productsService.update(updateProduct);
       });
 
       test('It should call products repository', () => {
         expect(productsRepository.findOneAndUpdate).toBeCalledWith(
-          { productId: productStub().productId },
+          { productId: updateProduct.productId },
           updateProduct,
         );
       });

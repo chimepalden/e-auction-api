@@ -64,15 +64,16 @@ describe('ProductsController', () => {
   describe('update', () => {
     it('It should update a product', async () => {
       let updateProduct: UpdateProductDto = {
+        productId: productStub().productId,
         startingPrice: 2000,
       };
       await dbConnection.collection('products').insertOne(productStub());
       const response = await request(httpServer)
-        .patch(`/products/${productStub().productId}`)
+        .patch(`/products`)
         .send(updateProduct);
-
+      console.log(response.body);
       expect(response.ok);
-      expect(response.body.productId).toEqual(productStub().productId);
+      expect(response.body.startingPrice).toEqual(2000);
     });
   });
 

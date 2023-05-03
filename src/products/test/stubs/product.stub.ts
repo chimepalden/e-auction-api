@@ -8,7 +8,7 @@ export const productStub = (): Product => {
     detailDescription: 'This is detail of product 1',
     category: 'Ornament',
     startingPrice: 1000,
-    bidEndDate: new Date('2023-04-14'),
+    bidEndDate: new Date('2023-10-14'),
     bids: [],
     sellerId: '1234',
   };

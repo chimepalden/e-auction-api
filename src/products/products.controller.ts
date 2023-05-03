@@ -31,12 +31,9 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
-  @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
-    return this.productsService.update(id, updateProductDto);
+  @Patch()
+  async update(@Body() updateProductDto: UpdateProductDto): Promise<Product> {
+    return this.productsService.update(updateProductDto);
   }
 
   @Delete(':id')
